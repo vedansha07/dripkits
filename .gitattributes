@@ -1,0 +1,7 @@
+# Normalise line endings: LF in the repository, native on checkout.
+#
+# `context/` is committed so the plans travel between machines. Without this,
+# a machine whose `core.autocrlf` differs from this one's would show every
+# context file as wholly rewritten, and the plans would conflict on every pull.
+# Pinning it here makes the stored form LF regardless of anyone's local config.
+* text=auto
