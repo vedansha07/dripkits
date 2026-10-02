@@ -10,9 +10,12 @@ travel between machines. No `.git/info/exclude` entry. Every commit block must i
 | File | What is in it | Status |
 | --- | --- | --- |
 | `howwework.md` | The standing working agreement — how we plan, git rules, how to talk, plus the dripkits overrides. Outranks defaults. | Live · amended 2026-09-20 |
-| `daily.md` | Date-wise log, newest first. What was done, and which file holds the detail. | Live · 2026-09-26 |
-| `skills-plan.md` | Skill install layout, discovery rules, what is blocked. | Live · 2026-09-26 |
-| `decisions-skills-plan.md` | My own calls on the skills setup. | Live · 2026-09-26 |
+| `daily.md` | Date-wise log, newest first. What was done, and which file holds the detail. | Live · 2026-10-03 |
+| `skills-plan.md` | Skill install layout, discovery rules, what is blocked. | Live · 2026-10-03 |
+| `decisions-skills-plan.md` | My own calls on the skills setup. | Live · 2026-10-03 |
+| `dripkits-plan.md` | The build plan, design direction, stack, phases, Phase 0 log. | Live · 2026-10-03 |
+| `decisions-dripkits-plan.md` | My own calls. 48 rows, 10 superseded on 10-03. | Live · 2026-10-03 |
+| `dripkits-spec.md` | His spec, verbatim. Source document. | Frozen · 2026-09-26 |
 
 Every topic is two files, side by side:
 
@@ -24,6 +27,7 @@ Every topic is two files, side by side:
 <vedanshasrivastava29@gmail.com>`, set `--local` on this repo only (his **option A**; global stays
 the work address). `c7416f9` on `main`, in sync with `origin/main`.
 
-**Open:** `.gitattributes` (`* text=auto`, repo root) and the 2026-09-20 `context/` edits are still
-uncommitted — needs a commit block. Empty `OneDrive\Desktop\free` still his to delete. Still do not
-know what dripkits is.
+**Open:** HEAD is `e109c53`. Everything since is uncommitted: the Phase 0 app, the 10-03 bright
+rebuild (garment pipeline, Remotion, frame sequence, product shots) and these context edits; commit
+block handed over. Deploy blocked on his Supabase and Vercel accounts. Wordmark pick pending on
+`/design`. The empty `free` folder on the OneDrive desktop is still his to delete.

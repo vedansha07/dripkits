@@ -2,6 +2,71 @@
 
 Newest first.
 
+## 2026-10-03
+
+- **His direction:** install the Remotion skill, free hand on the whole codebase, references
+  threeui.com and 21st.dev, no scroll animations like mine; instead a start image, an end image, the
+  animation between, mapped to scroll; and brighter. Verbatim in `dripkits-plan.md`.
+- **Built:** a jersey sewn from its own pattern by a cloth simulation (`scripts/garment`), rendered in
+  Remotion (`remotion/`) as a 150-frame transparent sequence (flat pieces at the start, finished
+  shirt at the end) and scrubbed by scroll over a yellow field (`src/components/sequence`). Site is
+  now one bright theme. All 14 products have rendered front, back and detail shots. Old real-time
+  3D hero, theme toggle and scroll reveals removed.
+- Start and end frames were rendered and reviewed as stills before the in-between, per his method.
+  Rendered, not AI-generated: no generation tool is available here; noted as a decision.
+- Verified: smoke 8/8 on phone and desktop, `next build`, hero captures at start, middle, end.
+- Seven Remotion skills installed project-local; `.claude/**` excluded from lint. Detail:
+  `skills-plan.md`.
+- Eleven new decisions, ten earlier ones marked superseded: `decisions-dripkits-plan.md`.
+
+**Next:** he reviews `/`. Then PLP, PDP, interest form, auth. Owed by him: wordmark pick, Supabase +
+Vercel accounts, the commit block.
+
+---
+
+## 2026-09-28 to 09-29
+
+- Rejected again: the parametric shirt ("not looking good at all"). He asked for a centred, real
+  Barcelona jersey and proper research first; research delivered as "just tell", recorded in the
+  plan's log. 09-29: started the local server (Docker Desktop had to be started first).
+
+---
+
+
+## 2026-09-27
+
+- Two more requirements from him: categories and products must be addable through admin later
+  (answered at the data layer: anything he might change is a row, not a constant; admin itself stays
+  Phase 4), and Razorpay runs in test mode until his account arrives (env swap to go live, no code
+  change).
+- "go plan files first". Written: `dripkits-spec.md` (verbatim), `dripkits-plan.md`,
+  `decisions-dripkits-plan.md` (19 rows). Index updated.
+- Correction, end of day: he **had** run the 26th block. `e109c53`, 2026-09-26 16:53, 175 files,
+  pushed. The morning entries above and the README assumed otherwise; both fixed. Verified with
+  `git log` and `git ls-files`, not assumed.
+- His three answers landed: no launch without checkout (Phases 0-2 before launch, Razorpay test until
+  his keys); slim admin into Phase 2 as a real UI, table editor gone; typographic wordmark until his
+  logo. "ok lets gi" = go. Plan and decisions updated (22 rows now). Still waiting on "build it".
+- **"build it". Phase 0 built and verified locally.** Next 16 app at the repo root, Docker Postgres
+  (`dripkits-pg`, port 54329, his support bot untouched), 14 tables migrated and seeded, home shell
+  and `/design` rendering real rows in both themes, production build green, lint and types clean,
+  six Playwright smoke tests green, screenshots reviewed and four things fixed from them. Detail and
+  the pinned versions: `dripkits-plan.md`. Eight new decisions in `decisions-dripkits-plan.md`.
+- Two environment facts worth remembering: Next 16 ships its own docs in `node_modules/next/dist/docs`
+  and differs from training data (Cache Components), and Git Bash rewrites a bare `/` argument to
+  `C:/Program Files/Git/` unless `MSYS_NO_PATHCONV=1` is set.
+- **Not deployed.** No Vercel or Supabase account exists yet; both are his to create.
+- **He rejected the Phase 0 look** (no 3D, no scroll effects, flat black) and asked for the GSAP
+  ScrollTrigger skill, `gsap` + `three`, and suggested a shirt waving in the wind that reacts to
+  scroll, pointer and click. Built it: CPU cloth on a gold rail, generated kit texture front and
+  back, pointer-steered wind, click gust, GSAP pin with a half turn on scroll, glow + grain, and the
+  remaining Home zones (marquee, player tiles, fan-photo empty state, footer). Seven decisions in
+  `decisions-dripkits-plan.md`, the bugs found by looking in `dripkits-plan.md`.
+- Skill install worked cleanly this time: `npx skills add ... --agent claude-code` lands in
+  `.claude/skills/`. It registered without a reload.
+
+**Next:** he reviews the new Home. Then the rest of Phase 1 (PLP, PDP, interest form, auth). Still owed by him: wordmark pick, Supabase + Vercel accounts, the commit block.
+
 ---
 
 ## 2026-09-26
@@ -52,6 +117,17 @@ Newest first.
   rather than trusting them by eye.
 - Four skills now, all project-local, all registered: `awesome-design`, `design-taste-frontend`,
   `playwright-cli`, `web-design-guidelines`. `skills-lock.json` is **stale** — it knows about two.
+- **Spec arrived, late in the day.** He pasted the full football-jersey-store spec: plan it, UI is
+  mine, be creative, 3D allowed, stack is my choice. Then "just tell dont do". Plan told in chat:
+  demand-first store, The Table as signature, Archivo + Geist Mono, kit gold accent, Next.js +
+  Supabase + Razorpay, five phases, Phase 1 shipping without payments. His answers: dummy assets
+  until he signs off, table editor as admin until Phase 4.
+- Still open: his "skill wins over your defaults" instruction. Not saved as written; a scoped wording
+  was offered; no answer yet.
+- Two long Bash heredocs died at exactly line 101 with an unmatched-quote error. Observed, not
+  proven: commands over 100 lines break. Long files go through the Write tool from now on.
+- **16:53, he ran the block.** `e109c53` pushed: skills, `.gitattributes`, `.gitignore`, context. 175
+  files. Recorded on the 27th, when I noticed.
 
 **Next:** he runs the commit block, and decides whether 2.4 MB of vendored brand markdown belongs in
 dripkits' history or gets gitignored and re-cloned per machine. He deletes the empty `free` folder.

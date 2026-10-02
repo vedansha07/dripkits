@@ -1,6 +1,61 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
 # Playwright CLI output (may contain credentials)
 .playwright-cli/
 .playwright/
 
 # Machine-local Claude Code permission state
 .claude/settings.local.json
+
+# keep the template, ignore the real ones
+!.env.example
+
+# Playwright test artifacts
+/test-results/
+/playwright-report/
+
+# Garment simulation output (regenerate with: pnpm garment)
+/remotion/public/garment/*.bin
+
+# Remotion render output (frames are exported to public/sequences)
+/.remotion-out/

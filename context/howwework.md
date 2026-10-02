@@ -31,6 +31,10 @@ Every plan, decision and record lives in `context/` at the repo root.
 
 ### Project override — dripkits
 
+**Docker (2026-09-27):** his Docker also runs a support bot. I only create and touch containers,
+volumes and networks I made, named `dripkits-*`. No `prune`, no `stop` or `rm` on anything else, no
+`--all` flags on destructive verbs, no Docker Desktop settings changes.
+
 **`context/` IS committed on this repo.** His call, 2026-09-20: we may not always be on this
 machine, so the plans have to travel with the code.
 

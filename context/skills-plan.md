@@ -1,9 +1,8 @@
 # skills — plan
 
-**Status:** Four skills installed, all project-local under `.claude/skills/`, all verified registered.
-`@playwright/cli` 0.1.21 installed globally as a tool. `.gitignore` now exists and is correct.
-Nothing skills-related is committed yet — the open question is whether 2.4 MB of vendored brand
-markdown belongs in this repo's history.
+**Status:** Eleven skills, all project-local under `.claude/skills/`, all registered without a
+reload: the four from 09-26, `gsap-scrolltrigger` (09-27), and seven Remotion skills (10-03). The
+2.4 MB `awesome-design` was committed by him in `e109c53`. Remotion skills are read before use.
 
 Decisions I took on my own: `decisions-skills-plan.md`.
 
@@ -19,6 +18,8 @@ Given 2026-09-26, in his words:
 - "also install this 3rd one only for this project (**local to this project only**)"
 - Third repo named later, when the pasted URL turned out to be incomplete: "awesome-design-md"
 - "install this skill as well" — the Playwright CLI skill
+- 2026-09-27: install `greensock/gsap-skills --skill gsap-scrolltrigger --agent claude-code`
+- 2026-10-03: "download remotion skill so that you can create motion graphics as well"
 
 **The project-local rule is standing.** He stated it once for the third skill and I am applying it to
 every skill unless he says otherwise. It is why the Playwright install dropped his `-g`.
@@ -123,3 +124,16 @@ These are different things and only one of them is project-local:
 
 **Next:** he decides whether `.claude/skills/` gets committed (2.4 MB) or gitignored. Then tells me
 what dripkits is → open `dripkits-plan.md` + `decisions-dripkits-plan.md`.
+
+### 2026-10-03
+
+- Installed Remotion's official skills from `remotion-dev/skills` (the repo has twelve): kept
+  `remotion-best-practices`, `-markup`, `-render`, `-create`, `-multimedia`, `-interactivity`,
+  `-docs`; skipped captions, maps, SaaS, studio and upgrade as irrelevant to rendering frames.
+  Project-local, `--agent claude-code`, no `-g`. Read best-practices, markup (incl. the 3D rules),
+  render and create before writing Remotion code: 3D inside `<ThreeCanvas>`, every animation driven
+  by `useCurrentFrame()`, never `useFrame`, WebGL renders via `angle`.
+- The skill folders ship third-party example code (Cesium, MapTiler) that broke `pnpm lint` with 75
+  findings; `.claude/**` is now in ESLint's ignores.
+
+**Next:** nothing pending on skills.

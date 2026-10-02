@@ -1,0 +1,248 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: var(--font-sans);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+  html {
+    @apply font-sans;
+    }
+}
+/* ------------------------------------------------------------------ */
+/* dripkits tokens. One theme, and it is bright. Later blocks win over */
+/* the shadcn defaults above.                                          */
+/* Ink for type and primary actions; signal yellow is the brand fill.  */
+/* Yellow is never text on a light ground: it fails contrast.          */
+/* Radius rule: interactive = pill, containers sharp, inputs 8px.      */
+/* ------------------------------------------------------------------ */
+@theme inline {
+  --font-mono: var(--font-geist-mono);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-status-in-stock: var(--status-in-stock);
+  --color-status-upcoming: var(--status-upcoming);
+  --color-status-interested: var(--brand);
+  --color-status-out: var(--muted-foreground);
+  --radius-sm: 2px;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 2px;
+  --radius-2xl: 2px;
+}
+
+:root, .light, .dark {
+  --radius: 0.5rem;
+  --background: oklch(0.972 0.003 264);      /* cool off-white */
+  --foreground: oklch(0.178 0.012 270);      /* ink */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.178 0.012 270);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.178 0.012 270);
+  --primary: oklch(0.178 0.012 270);         /* primary actions are ink */
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.935 0.004 264);
+  --secondary-foreground: oklch(0.178 0.012 270);
+  --muted: oklch(0.935 0.004 264);
+  --muted-foreground: oklch(0.47 0.012 264);
+  --accent: oklch(0.935 0.004 264);
+  --accent-foreground: oklch(0.178 0.012 270);
+  --border: oklch(0.9 0.005 264);
+  --input: oklch(0.88 0.006 264);
+  --ring: oklch(0.178 0.012 270);
+  --brand: oklch(0.885 0.17 92);             /* signal yellow, #FFD23F */
+  --brand-foreground: oklch(0.178 0.012 270);
+  --status-in-stock: oklch(0.52 0.13 152);   /* dark enough to be text on white */
+  --status-upcoming: oklch(0.5 0.17 262);
+}
+
+@layer components {
+  /* Squeezed: headlines and jersey-number moments. */
+  .type-display { font-stretch: 62%; font-weight: 800; letter-spacing: -0.02em; line-height: 0.95; text-transform: uppercase; }
+  /* Stretched: the one inversion, reserved for the mark. */
+  .type-wordmark { font-stretch: 125%; font-weight: 900; letter-spacing: -0.06em; line-height: 1; }
+  /* Numbers: prices, counts, sizes, order ids. */
+  .type-num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+}
+
+/* Grain on a fixed, non-interactive layer above the page. Never on a scrolling element. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ---------- the one marquee on the page ---------- */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-track { animation: marquee 48s linear infinite; will-change: transform; }
+.marquee:hover .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
+
+/* ---------- hero: frame box, numerals, copy steps ---------- */
+/* The square the frames are drawn into. Phones: centred under the copy. Desktop: right half. */
+.hero-box { left: 50%; top: 57%; width: min(114vw, 68svh); translate: -50% -50%; container-type: inline-size; }
+@media (min-width: 1024px) {
+  .hero-box { left: auto; right: max(0rem, calc((100vw - 80rem) / 2 - 2rem)); top: 52%; width: min(60vw, 104svh); translate: 0 -50%; }
+}
+/* Giant season numerals, exactly behind the shirt; they settle as the shirt comes together. */
+.hero-numerals {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  translate: -50% -50%;
+  font-size: 36cqw;
+  line-height: 0.8;
+  color: oklch(0.99 0 0);
+  white-space: nowrap;
+  scale: calc(0.92 + var(--p, 0) * 0.08);
+  /* arrive with the shirt: hidden over the flat pieces, fully in by mid-scroll */
+  opacity: clamp(0, (var(--p, 0) - 0.2) * 3.5, 1);
+  pointer-events: none;
+  user-select: none;
+}
+/* Copy steps share one grid cell; the stage's data-step (set from scroll) picks which shows.
+   Hidden steps are visibility:hidden, so they are neither clickable nor announced. */
+.hero-steps { display: grid; }
+.hero-step {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 18px;
+  transition: opacity 0.35s ease, translate 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.5s;
+}
+.seq-stage[data-step="0"] .hero-step-0,
+.seq-stage[data-step="1"] .hero-step-1,
+.seq-stage[data-step="2"] .hero-step-2 {
+  opacity: 1;
+  visibility: visible;
+  translate: 0 0;
+  transition: opacity 0.35s ease, translate 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none !important; }
+  .seq-section { height: 100svh !important; }
+  .hero-step { transition: none; }
+}
