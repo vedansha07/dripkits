@@ -128,121 +128,201 @@
     }
 }
 /* ------------------------------------------------------------------ */
-/* dripkits tokens. One theme, and it is bright. Later blocks win over */
-/* the shadcn defaults above.                                          */
-/* Ink for type and primary actions; signal yellow is the brand fill.  */
-/* Yellow is never text on a light ground: it fails contrast.          */
-/* Radius rule: interactive = pill, containers sharp, inputs 8px.      */
+/* dripkits. One theme, and it is bright: a cool light ground, ink for  */
+/* type and primary actions, and colour that comes from the kit on      */
+/* screen (--kit-a/b/c, tweened by the stage when the jersey reprints). */
+/* Shape rule: interactive = pill, containers 20px, panels 28px.        */
+/* Layers: atmosphere -1, giant type 1, live jersey 2, foreground 3,    */
+/* header 40, grain 50. Foreground must sit in a positioned z-3 box or  */
+/* the jersey draws over it.                                            */
 /* ------------------------------------------------------------------ */
 @theme inline {
   --font-mono: var(--font-geist-mono);
-  --color-brand: var(--brand);
-  --color-brand-foreground: var(--brand-foreground);
+  --color-kit-a: var(--kit-a);
+  --color-kit-b: var(--kit-b);
+  --color-kit-c: var(--kit-c);
   --color-status-in-stock: var(--status-in-stock);
   --color-status-upcoming: var(--status-upcoming);
-  --color-status-interested: var(--brand);
-  --color-status-out: var(--muted-foreground);
-  --radius-sm: 2px;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 2px;
-  --radius-2xl: 2px;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
+  --radius-3xl: 1.75rem;
 }
 
 :root, .light, .dark {
-  --radius: 0.5rem;
-  --background: oklch(0.972 0.003 264);      /* cool off-white */
-  --foreground: oklch(0.178 0.012 270);      /* ink */
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.178 0.012 270);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.178 0.012 270);
-  --primary: oklch(0.178 0.012 270);         /* primary actions are ink */
+  --radius: 1.25rem;
+  --background: oklch(0.966 0.004 255);
+  --foreground: oklch(0.165 0.014 268);
+  --card: oklch(0.995 0.002 255);
+  --card-foreground: oklch(0.165 0.014 268);
+  --popover: oklch(0.995 0.002 255);
+  --popover-foreground: oklch(0.165 0.014 268);
+  --primary: oklch(0.165 0.014 268);
   --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.935 0.004 264);
-  --secondary-foreground: oklch(0.178 0.012 270);
-  --muted: oklch(0.935 0.004 264);
-  --muted-foreground: oklch(0.47 0.012 264);
-  --accent: oklch(0.935 0.004 264);
-  --accent-foreground: oklch(0.178 0.012 270);
-  --border: oklch(0.9 0.005 264);
-  --input: oklch(0.88 0.006 264);
-  --ring: oklch(0.178 0.012 270);
-  --brand: oklch(0.885 0.17 92);             /* signal yellow, #FFD23F */
-  --brand-foreground: oklch(0.178 0.012 270);
-  --status-in-stock: oklch(0.52 0.13 152);   /* dark enough to be text on white */
-  --status-upcoming: oklch(0.5 0.17 262);
+  --secondary: oklch(0.93 0.005 260);
+  --secondary-foreground: oklch(0.165 0.014 268);
+  --muted: oklch(0.93 0.005 260);
+  --muted-foreground: oklch(0.45 0.014 264);
+  --accent: oklch(0.93 0.005 260);
+  --accent-foreground: oklch(0.165 0.014 268);
+  --border: oklch(0.165 0.014 268 / 0.1);
+  --input: oklch(0.165 0.014 268 / 0.16);
+  --ring: oklch(0.165 0.014 268);
+  --status-in-stock: oklch(0.5 0.13 152);
+  --status-upcoming: oklch(0.48 0.17 262);
+  /* the hero kit; the stage retunes these when the jersey reprints */
+  --kit-a: #14388a;
+  --kit-b: #8a1437;
+  --kit-c: #e3b53e;
 }
 
 @layer components {
-  /* Squeezed: headlines and jersey-number moments. */
+  /* Expanded and black: the giant words behind the jersey. */
+  .type-giant { font-stretch: 125%; font-weight: 900; letter-spacing: -0.055em; line-height: 0.8; text-transform: uppercase; }
+  /* Headlines: wide, heavy, tight. */
+  .type-head { font-stretch: 116%; font-weight: 800; letter-spacing: -0.045em; line-height: 0.95; }
+  /* Squeezed caps: jersey-number moments, crest initials. */
   .type-display { font-stretch: 62%; font-weight: 800; letter-spacing: -0.02em; line-height: 0.95; text-transform: uppercase; }
-  /* Stretched: the one inversion, reserved for the mark. */
+  /* Big counts, squeezed like a shirt number. */
+  .type-count { font-stretch: 62%; font-weight: 800; letter-spacing: -0.03em; line-height: 0.82; font-variant-numeric: tabular-nums; }
+  /* The mark, the one place the family runs at full width. */
   .type-wordmark { font-stretch: 125%; font-weight: 900; letter-spacing: -0.06em; line-height: 1; }
-  /* Numbers: prices, counts, sizes, order ids. */
+  /* Prices, sizes, ids. */
   .type-num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+  /* Frosted panel over the colour field and the jersey. A web approximation of glass. */
+  .glass {
+    background: color-mix(in oklab, var(--card) 60%, transparent);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    backdrop-filter: blur(20px) saturate(170%);
+    border: 1px solid color-mix(in oklab, white 72%, transparent);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.7),
+      0 14px 44px -18px rgb(13 15 21 / 0.28);
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .glass { background: var(--card); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  }
 }
+
+/* ---------- atmosphere: three soft fields in the current kit's colours ----------
+   Two sets, each painted once in a kit's colours (--a/--b/--c set on the set), crossfaded with
+   opacity. Tweening colour variables on :root instead restyles the whole page every frame and
+   made scrolling stutter. */
+.atmos { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.atmos-set { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease; }
+.atmos-set[data-on="true"] { opacity: 1; }
+.atmos i { position: absolute; border-radius: 50%; will-change: transform; }
+.atmos-set i:nth-child(1) {
+  width: 85vmax; height: 85vmax; left: -32vmax; top: -38vmax;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--a) 30%, transparent), transparent);
+  animation: atmos-a 30s ease-in-out infinite alternate;
+}
+.atmos-set i:nth-child(2) {
+  width: 90vmax; height: 90vmax; right: -38vmax; bottom: -46vmax;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--b) 26%, transparent), transparent);
+  animation: atmos-b 36s ease-in-out infinite alternate;
+}
+.atmos-set i:nth-child(3) {
+  width: 60vmax; height: 60vmax; left: 38vw; top: 8vh;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--c) 22%, transparent), transparent);
+  animation: atmos-c 42s ease-in-out infinite alternate;
+}
+@keyframes atmos-a { to { transform: translate3d(14vmax, 10vmax, 0) scale(1.08); } }
+@keyframes atmos-b { to { transform: translate3d(-12vmax, -8vmax, 0) scale(1.12); } }
+@keyframes atmos-c { to { transform: translate3d(-18vmax, 14vmax, 0) scale(0.9); } }
 
 /* Grain on a fixed, non-interactive layer above the page. Never on a scrolling element. */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: 60;
+  z-index: 50;
   pointer-events: none;
-  opacity: 0.04;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
 }
 
-/* ---------- the one marquee on the page ---------- */
-@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.marquee-track { animation: marquee 48s linear infinite; will-change: transform; }
-.marquee:hover .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
+/* ---------- the live jersey layer ---------- */
+.stage { position: fixed; inset: 0; z-index: 2; pointer-events: none; }
+/* Still images stand in for the jersey only if it is not live within a few seconds (no WebGL, a
+   slow network), and always under reduced motion. Shown at once, they would ghost behind the
+   flat pieces of the sewing intro. */
+@keyframes fallback-in { to { opacity: 1; } }
+.stage-fallback { opacity: 0; animation: fallback-in 0.6s ease 3.5s forwards; }
+html[data-stage="live"] .stage-fallback { display: none; }
+html:not([data-stage="live"]) .stage-hint { display: none; }
 
-/* ---------- hero: frame box, numerals, copy steps ---------- */
-/* The square the frames are drawn into. Phones: centred under the copy. Desktop: right half. */
-.hero-box { left: 50%; top: 57%; width: min(114vw, 68svh); translate: -50% -50%; container-type: inline-size; }
-@media (min-width: 1024px) {
-  .hero-box { left: auto; right: max(0rem, calc((100vw - 80rem) / 2 - 2rem)); top: 52%; width: min(60vw, 104svh); translate: 0 -50%; }
-}
-/* Giant season numerals, exactly behind the shirt; they settle as the shirt comes together. */
-.hero-numerals {
+/* ---------- hero ---------- */
+.hero-word {
   position: absolute;
   left: 50%;
-  top: 46%;
-  translate: -50% -50%;
-  font-size: 36cqw;
-  line-height: 0.8;
-  color: oklch(0.99 0 0);
+  top: calc(4.5rem + 3svh);
+  translate: -50% 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 31vw;
+  color: var(--foreground);
+  will-change: transform;
   white-space: nowrap;
-  scale: calc(0.92 + var(--p, 0) * 0.08);
-  /* arrive with the shirt: hidden over the flat pieces, fully in by mid-scroll */
-  opacity: clamp(0, (var(--p, 0) - 0.2) * 3.5, 1);
   pointer-events: none;
   user-select: none;
 }
-/* Copy steps share one grid cell; the stage's data-step (set from scroll) picks which shows.
-   Hidden steps are visibility:hidden, so they are neither clickable nor announced. */
-.hero-steps { display: grid; }
-.hero-step {
-  grid-area: 1 / 1;
-  opacity: 0;
-  visibility: hidden;
-  translate: 0 18px;
-  transition: opacity 0.35s ease, translate 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.5s;
+.hero-word > span { display: block; }
+@media (min-width: 768px) {
+  .hero-word { flex-direction: row; font-size: 15.2vw; top: calc(4.5rem + 2svh); }
 }
-.seq-stage[data-step="0"] .hero-step-0,
-.seq-stage[data-step="1"] .hero-step-1,
-.seq-stage[data-step="2"] .hero-step-2 {
-  opacity: 1;
-  visibility: visible;
-  translate: 0 0;
-  transition: opacity 0.35s ease, translate 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s;
+/* entrance: plays on first paint, staggered by --i */
+@keyframes rise { from { transform: translateY(105%); opacity: 0; } to { transform: none; opacity: 1; } }
+.rise { animation: rise 1s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: calc(var(--i, 0) * 70ms + 150ms); }
+/* split-line reveals: the line box clips, the inner span rises */
+.line-mask { display: block; overflow: hidden; padding-bottom: 0.06em; margin-bottom: -0.06em; }
+.line-mask > span { display: block; }
+
+/* ---------- most wanted: the giant club name behind the jersey ---------- */
+.wanted-names { display: grid; overflow: hidden; }
+.wanted-name {
+  grid-area: 1 / 1;
+  will-change: translate;
+  translate: 0 105%;
+  transition: translate 0.8s cubic-bezier(0.7, 0, 0.2, 1);
+}
+.wanted-name[data-state="on"] { translate: 0 0; }
+.wanted-name[data-state="past"] { translate: 0 -105%; }
+.wanted-panel { transition: opacity 0.45s ease, translate 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.wanted-panel[data-state="off"] {
+  opacity: 0; translate: 0 14px; pointer-events: none; visibility: hidden;
+  transition: opacity 0.3s ease, translate 0.3s ease, visibility 0s linear 0.3s;
 }
 
+/* ---------- how it works: one step at a time ---------- */
+.how-steps { display: grid; }
+.how-step { grid-area: 1 / 1; transition: opacity 0.45s ease, translate 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.how-step[data-state="off"] {
+  opacity: 0; translate: 0 22px; visibility: hidden;
+  transition: opacity 0.3s ease, translate 0.3s ease, visibility 0s linear 0.3s;
+}
+
+/* ---------- the one marquee on the page ---------- */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-track { animation: marquee 40s linear infinite; will-change: transform; }
+.marquee:hover .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
+
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none !important; }
-  .seq-section { height: 100svh !important; }
-  .hero-step { transition: none; }
+  .atmos i, .marquee-track, .rise { animation: none !important; }
+  .wanted-name, .wanted-panel, .how-step { transition: none !important; }
+  .stage-fallback { opacity: 1; animation: none; }
+  /* every step of how-it-works, stacked */
+  .how-steps { gap: 3rem; }
+  .how-step { grid-area: auto; }
+  .how-step[data-state="off"] { opacity: 1; translate: none; visibility: visible; }
+  .wanted-panel[data-state="off"], .wanted-name[data-state] { visibility: visible; }
+  /* no scroll-driven stages: sections collapse to their natural height */
+  .scroll-stage { height: auto !important; }
+  .scroll-stage > .scroll-stage-inner { position: relative !important; height: auto !important; min-height: 100svh; }
 }

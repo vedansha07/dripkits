@@ -24,7 +24,7 @@ export function earliestDrop(variants: VariantLike[]) {
 
 export const STATUS_LABEL: Record<VariantStatus, string> = {
   in_stock: "In stock",
-  interested: "Interested",
+  interested: "Claim open",
   upcoming: "Upcoming",
   out_of_stock: "Sold out",
 };

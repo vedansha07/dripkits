@@ -95,3 +95,40 @@ export async function getPlayers(limit = 4) {
     with: { club: true },
   });
 }
+
+/** Every active product with what a card needs: club, images, sizes. */
+export async function getCatalogue() {
+  "use cache";
+  cacheLife("minutes");
+  cacheTag("products");
+
+  return db.query.products.findMany({
+    where: (p, { eq }) => eq(p.active, true),
+    orderBy: (p, { desc, asc }) => [desc(p.featured), asc(p.name)],
+    with: {
+      club: true,
+      media: { orderBy: (m, { asc }) => [asc(m.sort)] },
+      variants: { with: { size: true } },
+    },
+  });
+}
+
+export type CatalogueProduct = Awaited<ReturnType<typeof getCatalogue>>[number];
+
+/** Players with the kits they are sold on, for shop-by-player. */
+export async function getPlayerKits(limit = 4) {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("players");
+  cacheTag("products");
+
+  return db.query.players.findMany({
+    where: (p, { eq }) => eq(p.active, true),
+    orderBy: (p, { asc }) => [asc(p.sort)],
+    limit,
+    with: {
+      club: true,
+      productPlayers: { with: { product: { with: { media: { orderBy: (m, { asc }) => [asc(m.sort)] } } } } },
+    },
+  });
+}

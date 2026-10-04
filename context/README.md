@@ -13,8 +13,8 @@ travel between machines. No `.git/info/exclude` entry. Every commit block must i
 | `daily.md` | Date-wise log, newest first. What was done, and which file holds the detail. | Live · 2026-10-03 |
 | `skills-plan.md` | Skill install layout, discovery rules, what is blocked. | Live · 2026-10-03 |
 | `decisions-skills-plan.md` | My own calls on the skills setup. | Live · 2026-10-03 |
-| `dripkits-plan.md` | The build plan, design direction, stack, phases, Phase 0 log. | Live · 2026-10-03 |
-| `decisions-dripkits-plan.md` | My own calls. 48 rows, 10 superseded on 10-03. | Live · 2026-10-03 |
+| `dripkits-plan.md` | The build plan, design direction (live 3D jersey), stack, phases, working log. | Live · 2026-10-03 |
+| `decisions-dripkits-plan.md` | My own calls. 60 rows, 16 superseded. | Live · 2026-10-03 |
 | `dripkits-spec.md` | His spec, verbatim. Source document. | Frozen · 2026-09-26 |
 
 Every topic is two files, side by side:
@@ -25,9 +25,9 @@ Every topic is two files, side by side:
 
 **Done:** repo initialised and pushed. Commit identity settled — `vedansha07
 <vedanshasrivastava29@gmail.com>`, set `--local` on this repo only (his **option A**; global stays
-the work address). `c7416f9` on `main`, in sync with `origin/main`.
+the work address). Pushed so far: `c7416f9`, `e109c53`, `d31b94d`; `main` in sync with `origin/main`.
 
-**Open:** HEAD is `e109c53`. Everything since is uncommitted: the Phase 0 app, the 10-03 bright
-rebuild (garment pipeline, Remotion, frame sequence, product shots) and these context edits; commit
-block handed over. Deploy blocked on his Supabase and Vercel accounts. Wordmark pick pending on
-`/design`. The empty `free` folder on the OneDrive desktop is still his to delete.
+**Open:** HEAD is `d31b94d` (the first 10-03 rebuild, pushed). Uncommitted: the second 10-03 pass,
+the live-jersey redesign, and these context edits; commit block handed over. Deploy blocked on his
+Supabase and Vercel accounts. Wordmark pick pending on `/design`. Not yet tested on a real Android
+phone. The empty `free` folder on the OneDrive desktop is still his to delete.

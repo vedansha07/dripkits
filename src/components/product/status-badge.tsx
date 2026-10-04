@@ -5,13 +5,13 @@ import { formatDropDate } from "@/lib/format";
 
 const STYLE: Record<VariantStatus, string> = {
   in_stock: "bg-status-in-stock/12 text-status-in-stock",
-  interested: "bg-brand text-brand-foreground",
+  interested: "bg-foreground text-background",
   upcoming: "bg-status-upcoming/12 text-status-upcoming",
-  out_of_stock: "bg-muted text-muted-foreground",
+  out_of_stock: "bg-foreground/[0.07] text-foreground/60",
 };
 
-// Pill, like every interactive-looking element. Status colours are the only colours on the
-// page besides the brand yellow, and Interested IS the brand: a yellow fill with ink text.
+// Pill, like every interactive-looking element. Claiming is the brand action, so it is ink;
+// the other states are tints of their status colour.
 export function StatusBadge({
   status,
   dropDate,

@@ -5,6 +5,9 @@ export default defineConfig({
   testDir: "./tests",
   timeout: 30_000,
   retries: 0,
+  // one browser at a time: two headless Chromes each rendering the live jersey in software WebGL
+  // starve each other and the scroll-timed checks flake
+  workers: 1,
   reporter: [["list"]],
   use: {
     baseURL: "http://localhost:3000",

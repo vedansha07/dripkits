@@ -13,6 +13,9 @@ import { paintKit, paintKnit } from "./kit";
 const anton = loadAnton("normal", { weights: ["400"], subsets: ["latin"] });
 const archivo = loadArchivo("normal", { weights: ["900"], subsets: ["latin"] });
 
+/** The two families the kit art is painted with; shared with the atlas export. */
+export const kitFonts = { anton, archivo };
+
 /** Paints the kit once fonts are ready; blocks the frame until the texture exists. */
 export function useKitTextures(garment: Garment | null, design: KitDesign, opts: { senyera?: boolean } = {}) {
   const [tex, setTex] = useState<{ map: THREE.CanvasTexture; bump: THREE.CanvasTexture } | null>(null);

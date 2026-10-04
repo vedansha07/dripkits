@@ -1,10 +1,13 @@
 # dripkits — plan
 
-**Status:** **Bright redesign built and verified locally, 2026-10-03.** Home is a scroll-scrubbed
-Remotion sequence (a jersey sewn from flat pattern pieces) over a yellow field, all catalogue
-imagery is rendered from the same simulated garment, the site is one light theme. Garment pipeline:
-`scripts/garment` (pattern + XPBD sewing sim) -> `remotion/` (renders) -> `scripts/sequence`,
-`scripts/products` (WebP export). Phase 0 app, schema and seed unchanged underneath.
+**Status:** **Live 3D redesign built and verified locally, 2026-10-03 (second pass).** Home is one
+real-time WebGL jersey that sews itself together on load and travels the whole page with the scroll
+(hero, how claiming works, most wanted, the table, footer), reprinting itself for each kit while the
+page atmosphere takes that kit's colours. Lenis smooth scroll; measured 79-90 fps scrolling the
+whole page on this laptop on charge. Asset pipeline: `scripts/garment` (pattern + XPBD sim) ->
+`pnpm garment:web` (GLB + intro keyframes) and `pnpm kits:render` (kit atlases, via Remotion) ->
+`public/models`, `public/kits`; catalogue renders unchanged (`pnpm products:render`). Phase 0 app,
+schema and seed unchanged underneath.
 **Not deployed:** needs his Vercel and Supabase accounts. Rest of Phase 1 (PLP, PDP, interest form,
 auth) not started.
 
@@ -60,6 +63,15 @@ The spec as he pasted it: `dripkits-spec.md`.
   then generate an ending image and then generate the animation starting from the starting image and
   leading to the ending image then properly map it according to the scroll and i dont want the
   website to look darkish make it look brighter / ok now go on"
+- **2026-10-03, after the sequence hero:** "ok it is cool but the scroll is a bit stuttery / i want
+  you to use full motion graphics / and not only rotate or whatever the tshirt on one spot i want it
+  to move around the full website / and not only tshirt i an not liking the design as well / find
+  other reference from those 2 webites and try using them / and i am talking about the full webite
+  design not only the tshirt / you dont have to exactly follow my design commands / i have already
+  given you full freedom of designing / if you thing the tshirt does not look cool then fuck it off
+  bro / try anything you want just give me that wow element in the design / go on / you can change
+  delete update add etc etc anything to the codebase i dont fuckin care bro just give a awsome
+  design."
 
 **Read as:** the spec's sitemap, pages, forms, data model and perf targets (§1-3, §5-6, §8) are
 binding scope. §4 Design System and §7 Tech Stack are advisory. "3rd elements" = 3D elements.
@@ -82,79 +94,100 @@ it: drip.
 
 ## Design direction
 
-**Revised 2026-10-03.** He rejected two rounds of real-time 3D ("basic", "looks 2d", "darkish") and
-set the method himself: a start image, an end image, the animation between, mapped to scroll, and a
-brighter site. The earlier dark/kit-gold/real-time-shirt direction is superseded; its record is in
-the working log and the decisions file.
+**Revised again 2026-10-03 (second pass).** He liked the sewn jersey but called the scroll stuttery,
+asked for full motion graphics, the shirt moving around the whole site instead of turning on one
+spot, and a new design for the whole site from threeui.com and 21st.dev references, with full
+freedom. The frame-sequence hero and the yellow field are superseded; their record is in the working
+log and the decisions file. His start/end/between method still runs, live, as the intro.
 
-**Design read:** consumer e-commerce for young Indian football fans buying kits as streetwear, with
-a bold product-poster language (one hero object, dead centre or right, overlapping giant type, a
-saturated colour field), leaning toward Tailwind v4 + shadcn/ui customised, GSAP ScrollTrigger for
-the one scrubbed sequence, everything else static.
+**Design read:** consumer e-commerce for young Indian football fans, in a kit-launch motion-graphics
+language: one live product travelling through a bright page, giant type behind it, the colours of
+the kit on screen washing the page. React Three Fiber for the jersey, GSAP ScrollTrigger + Lenis for
+the choreography, Tailwind v4 + shadcn customised, CSS for entrances.
 
-**Dials** (taste skill, marketing surfaces only): VARIANCE 7 / MOTION 5 / DENSITY 4. Motion is
-concentrated in the scroll sequences; the rest of the page does not animate on scroll.
+**Dials** (taste skill, marketing surfaces only): VARIANCE 8 / MOTION 9 / DENSITY 3. Every motion
+has a job: the intro tells the made-to-order story, the travel links the sections, the print pass is
+the kit change, the counters are the claims.
+
+**References used:** threeui.com product pages (NOEMA: a giant wordmark behind the product; Aurello:
+the product's colour washing the page; Moraine 60 and Vow Atelier: live product plus finish
+selector). All Pro templates, previews only, and nearly all dark: layouts carried over, palettes did
+not. 21st.dev: liquid-glass buttons (the glass header, panels and secondary buttons), the motion
+footer (a full-width wordmark), kinetic solid/outline type (the club marquee). Considered and not
+used: Works Wheel / 3D carousel for the table, scroll-expansion hero.
 
 **The taste skill governs Home and the brand layer only.** Product grids, checkout and admin follow
 e-commerce convention.
 
+### The signature: one jersey, the whole page
+
+- A fixed, full-viewport WebGL layer between the page's giant type (behind) and its foreground (in
+  front). The garment is the simulated one (`public/models/jersey.glb`), wearing a kit atlas.
+- **On load it sews itself:** the four flat pieces fly in, curl round the body, and keyframes of the
+  recorded simulation sew and drape it (the HeroBuild choreography, live, about 3.7 s).
+- **Then it follows the scroll:** each section's scroll position is a keyframe of its pose
+  (position, size, turn); between keys the pose eases, and the renderer damps toward it so it glides
+  even when the wheel steps. The pointer tilts it.
+- **Path, desktop:** right of centre in the hero, left with its back turned for how-claiming-works
+  (turning to the front over the three steps), centre for most wanted, left beside the table wearing
+  whatever card you point at, off the top for the players, then down between the footer links and the
+  giant wordmark. Phones: centred poses; it steps away during the table, where the cards carry photos.
+- **A kit change is a print pass:** a glowing line runs up the shirt with the new kit printed below
+  it. The page atmosphere crossfades to the kit's colours; on the most-wanted wall the club's code
+  slides in, in its colour.
+
 ### The signature idea: demand as a league table
 
-Unchanged. **The Table** ranks the most-wanted kits; cards say "#412 want this"; the interest
-confirmation says "You're #413."
-
-### The hero: a kit sewn into existence
-
-A pre-rendered frame sequence scrubbed by scroll. **Start frame:** the four flat pattern pieces,
-print side up, like a tech pack. **End frame:** the finished jersey at three-quarter. **Between:** the
-pieces fly in (a real 3D turn), curl round an invisible body, and a recorded cloth simulation sews
-them shut and lets them drape. Rendered in Remotion, exported as transparent WebP, drawn to one
-canvas. The yellow field, the giant "26/27" numerals behind the shirt and the copy are HTML, synced
-to the frames through a CSS variable. Copy changes in three steps (pieces, sewing, finished); the
-CTA never moves.
+Kept. The table puts buyable kits first, then ranks the rest by claims; most wanted shows the top
+four with their claims size by size.
 
 ### Colour
 
-One bright theme. Cool off-white ground, white cards, **ink** (#0E1016) for type and primary
-actions, **signal yellow** (#FFD23F) as the brand fill: the hero field, the Interested status, our
-badges. Yellow is never text on a light ground. Status: in stock green, upcoming blue, out of stock
-grey, interested = yellow fill with ink text. Club colours live in the kit imagery only.
+One bright theme: cool light ground, ink for type and primary actions, and colour from the kit on
+screen: three soft fields in its colours, crossfaded per kit. No fixed brand accent; the yellow field
+is gone. Status: in stock green, upcoming blue, claim open ink, sold out grey.
 
 ### Type
 
-Unchanged: Archivo (variable width: 62 condensed for display, 125 for the wordmark) + Geist Mono for
-numbers. Jersey names and numbers are set in Anton inside the renders.
+Archivo variable: width 125 black for the giant words (DRIPKITS, club codes, player surnames), 116
+heavy for headlines, 62 squeezed for counts; Geist Mono for prices and sizes.
 
 ### Shape
 
-Unchanged: interactive = pill, containers sharp, inputs 8px.
+Interactive = pill, containers 20px, big panels 28px. Glass (a frosted web approximation) only over
+the jersey and the atmosphere: header, most-wanted panels, secondary buttons.
 
 ### Imagery
 
-**All catalogue imagery is rendered from the same garment:** 14 products x front, back, detail,
-in club-inspired colourways. No crests, no manufacturer or sponsor marks; our "DK" badge sits where a
-crest would. Player photos stay picsum placeholders (no real likenesses). His real photography and
-logo replace all of it.
+Rendered dummy catalogue (14 kits x front, back, detail) plus a texture atlas per kit for the live
+jersey. No crests, manufacturer or sponsor marks; our "DK" badge sits where a crest would. Players
+are shown by the back of their kit; no photos of people. His real assets replace all of it.
 
 ### Wordmark
 
-Unchanged: typographic, lowercase, Archivo at width 125. Three variants on `/design`, now shown on
-the yellow field and on white. Waiting on his pick.
+Typographic, lowercase, Archivo at width 125. Variants on `/design`: a solid, b "kits" outlined, c
+condensed caps. Waiting on his pick.
 
 ---
 
 ## Home (the page the taste skill governs)
 
-Seven zones, six layout families, none repeated:
+Seven zones, seven layout families, none repeated:
 
-1. **Hero**, asymmetric split. Left: headline (max 2 lines), subtext (max 20 words), primary CTA
-   "Shop 26/27", secondary "See the table". Right: the 3D jersey, photo fallback.
-2. **The Table.** Top 10 by interest count: position, crest, kit, count, movement. ISR at 60s.
-3. **26/27 drop rail.** Horizontal scroll-snap product cards, "View all".
-4. **Club crests.** One marquee, the page's only one. Tap → filtered PLP.
-5. **Shop by player.** Four portrait tiles in an asymmetric grid, exactly four cells.
-6. **Fan photos.** Masonry from photo reviews. A designed empty state until reviews exist.
-7. **Footer.**
+1. **Hero**, product over giant type. "You claim it. We make it.", a 19-word line, "Shop the table"
+   and "How claiming works". A floating product tag beside the jersey on desktop.
+2. **How claiming works**, pinned split: claim your size / we count every claim (live counter) /
+   enough claims, we make the run.
+3. **Most wanted**, pinned stage: top four by claims, giant club code, claims with a per-size chart,
+   "Claim your size".
+4. **The table**, sticky split: the jersey on the left wears the card you point at; two-up cards on
+   the right; filters All / In stock / Claiming / Dropping soon.
+5. **Club marquee**, the page's only marquee: solid and outlined names, leaning with scroll speed.
+6. **Shop by player**, asymmetric four-up (a scroll-snap row on phones), kit backs.
+7. **Footer**: links, the jersey's landing space, a full-width wordmark.
+
+Reduced motion: no live jersey, no smooth scroll; sections collapse to normal height with still
+renders and every step shown.
 
 ---
 
@@ -187,13 +220,13 @@ and 1, I seed and edit data directly.
 | Layer | Pick | Instead of |
 | --- | --- | --- |
 | App | Next.js App Router, TypeScript, pnpm. One app; admin is a role-gated route group | Separate NestJS/FastAPI backend: overhead for one developer |
-| UI | Tailwind v4, shadcn/ui customised, Phosphor, Motion | |
+| UI | Tailwind v4, shadcn/ui customised, Phosphor. Motion for small UI states; GSAP ScrollTrigger + Lenis for the scroll choreography | |
 | Data | Supabase: Postgres, Auth, Storage, Realtime. Drizzle for schema, migrations, typed queries | Neon + separate auth + separate storage: three services instead of one |
 | Payments | Razorpay: UPI, cards, netbanking, COD. **Test mode until his account arrives** | Cashfree |
 | Email | Resend. WhatsApp Business API in Phase 5 | WhatsApp first: Meta verification takes weeks |
 | Search | Postgres full-text until the catalogue passes ~500 SKUs | Meilisearch/Algolia: overkill at launch |
 | Hosting | Vercel, ISR, Speed Insights for real-user Core Web Vitals | |
-| 3D | React Three Fiber + drei, lazy, isolated | |
+| 3D | React Three Fiber + drei, lazy, one fixed canvas for the live jersey. Remotion renders the catalogue and the kit atlases | A frame sequence (tried, superseded) |
 | Tests | Playwright on the money paths; Lighthouse CI budgets | |
 
 Versions get pinned at scaffold time to whatever is current stable, and recorded in the log.
@@ -403,3 +436,39 @@ Supabase + Vercel accounts, the commit block.
 **Next:** he reviews `/`. Then the rest of Phase 1: PLP, PDP with the four-state buy box and the
 interest form, email auth, My Interests. Still owed by him: wordmark pick, Supabase + Vercel
 accounts, the commit block.
+
+### 2026-10-03, second pass: one live jersey for the whole page
+
+- **His feedback** (verbatim in His answers): stuttery scroll, full motion graphics, the shirt moving
+  around the whole site, the whole design redone from threeui.com and 21st.dev, full freedom.
+- **Research:** threeui.com landing pages (screenshots of Moraine 60, NOEMA N1, Aurello, Tandem, Nexus
+  Pro X, AUBE; all Pro, previews only) and the 21st.dev catalogue (hero, scroll-area, shaders,
+  backgrounds, text, gallery). What was taken: Design direction, References.
+- **Built:** `scripts/garment/export-web.ts` (`pnpm garment:web`: jersey.glb 293 KB, intro data
+  313 KB gzipped), a `KitAtlas` Remotion still + `scripts/kits/render.mts` (`pnpm kits:render`: 14
+  kit atlases at 2048 and 1024 plus the knit tile, 1.2 MB in all), the stage
+  (`src/components/stage`: pose store, real-time intro, kit material with the print pass, R3F canvas,
+  loader), Lenis (`src/components/motion`), the new home (`src/components/home`: hero, how it works,
+  most wanted, the table, marquee, players, choreography), glass header, wordmark footer, tokens,
+  `/design`, smoke tests. Removed: the frame-sequence player, its 300 frames and export script, the
+  old hero, rail, fan-photo and player-tile components.
+- **Stutter, measured and fixed.** First build: 51 fps (dev) and 41 fps (production) wheel-scrolling.
+  Variants isolated it: tweening the kit colour variables on :root restyled the whole document every
+  frame (frozen: 56 to 79 fps); replaced by an atmosphere crossfade. Then a 2048 px texture upload
+  cost 67-79 ms (raw-pixel decode: 34-56 ms; all of the page's kits now upload before the jersey
+  appears), the intro's normals made 22 ms frames (typed-array normals: 90 fps), and links to unbuilt
+  pages prefetched 404s mid-scroll (prefetch off). Result, production build, this laptop on charge:
+  wheel-scrolling the whole page from one second after load, 79-90 fps, 0-2 % slow frames, worst
+  frame 44 ms (the display runs at 90 Hz).
+- **Battery note:** at 9 % battery Chrome's energy saver capped the page at 30 fps (every frame
+  34 ms); with the saver off, 72-84 fps on the same battery. Below 20 % battery, judge smoothness on
+  charge.
+- **Verified:** typecheck, lint, `next build` (`/` static, 1 m revalidate), smoke 8/8 on phone and
+  desktop, screenshots of every section on both, the intro and a print pass captured mid-motion.
+- **Not verified:** a real mid-range Android, which the performance budget asks for before animation
+  ships. Phone checks were an emulated Pixel 7 viewport on this laptop's GPU.
+- **Started:** Docker Desktop (it was not running) and `dripkits-pg` only.
+
+**Next:** he reviews `/` (production build on :3100 for real speed; dev on :3000). Then the rest of
+Phase 1: PLP, PDP with the four-state buy box and the interest form, email auth, My Interests. Still
+owed by him: wordmark pick, Supabase + Vercel accounts, the commit block.

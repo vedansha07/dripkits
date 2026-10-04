@@ -2,6 +2,28 @@
 
 Newest first.
 
+## 2026-10-03, second pass
+
+- **His direction:** the sequence was cool but stuttery; full motion graphics; the shirt should move
+  around the whole site; redesign everything from threeui.com and 21st.dev; full freedom. Verbatim
+  in `dripkits-plan.md`.
+- **Built:** one real-time WebGL jersey for the whole home page. It sews itself together on load,
+  then travels with the scroll through every section, reprinting itself per kit with a scan line
+  while the page takes on that kit's colours. New home (hero over a giant wordmark, how claiming
+  works, most wanted, the table, club marquee, players, wordmark footer), glass header, Lenis smooth
+  scroll. Frame-sequence hero and its 300 frames removed.
+- **Stutter:** measured, traced to a colour tween restyling the whole page every frame, fixed, plus
+  texture uploads and intro normals. 79-90 fps scrolling the whole page on this laptop on charge.
+  Below 20 % battery Chrome caps pages at 30 fps.
+- Verified: types, lint, build, smoke 8/8, screenshots on phone and desktop. Not verified on a real
+  Android phone.
+- Twelve new decisions, six earlier ones superseded: `decisions-dripkits-plan.md`.
+
+**Next:** he reviews `/` (:3100 production, :3000 dev). Then PLP, PDP, interest form, auth. Owed by
+him: wordmark pick, Supabase + Vercel accounts, the commit block.
+
+---
+
 ## 2026-10-03
 
 - **His direction:** install the Remotion skill, free hand on the whole codebase, references
